@@ -43,7 +43,7 @@ const Login = ({ }) => {
                                 type="submit" 
                                 className="w-full h-12 text-[#1C1C34]  bg-white rounded-sm"
                                 >
-                                    <Link to={"/estudiante/home"}> INICIAR SESIÓN </Link>
+                                    <Link to={"/asesor/home"}> INICIAR SESIÓN </Link>
                                 
                             </button>
                             <a href="" className="text-white text-right">OLVIDO SU CONTRASEÑA?</a>
