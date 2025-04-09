@@ -1,20 +1,38 @@
+import EstudianteSidebar from "../Components/Sidebar/EstudianteSidebar";
+import AsesorSidebar from "../Components/Sidebar/AsesorSidebar";
+import AdminSidebar from "../Components/Sidebar/AdminSidebar";
+import Navbar from "../Components/Navbar"; // Navbar unificado
 
-// import EstudianteSidebar from "../Components/Sidebar/EstudianteSidebar"
-// import EstudianteNavbar from "../Components/Navbar/EstudianteNavbar"
-import AsesorSiderbar from "../Components/Sidebar/AsesorSidebar"
-import AsesorNavbar from "../Components/Navbar/AsesorNavbar"
-import AdminSiderbar from "../Components/Sidebar/AdminSidebar"
-import AdminNavbar from "../Components/Navbar/AdminNavbar"
+const LayoutApp = ({ children }) => {
+  // Obtener usuario desde localStorage
+  const user = JSON.parse(localStorage.getItem('user'));
 
+  // Verificación de existencia del usuario
+  if (!user) {
+    return <div className="text-center p-10">Cargando datos del usuario...</div>;
+  }
 
+  // Función para renderizar el sidebar correspondiente
+  const renderSidebar = () => {
+    switch (user.rol) {
+      case 'estudiante':
+        return <EstudianteSidebar />;
+      case 'asesor':
+        return <AsesorSidebar />;
+      case 'administrador':
+        return <AdminSidebar />;
+      default:
+        return null;
+    }
+  };
 
-const LayoutApp = ({children}) =>{
-    return(
-        <div>
-            <AdminSiderbar/>
-            <AdminNavbar/>
-            {children}
-        </div>
-    );
-}
+  return (
+    <div>
+      {renderSidebar()}
+      <Navbar user={user}/>
+      {children}     
+    </div>
+  );
+};
+
 export default LayoutApp;

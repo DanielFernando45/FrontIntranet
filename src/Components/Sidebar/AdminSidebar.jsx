@@ -8,7 +8,7 @@ import MenuRetraido from "../../assets/icons/menuRetra.svg";
 import Gestion from "../../assets/icons/IconAsesor/gestionAlum.svg";
 import Asignaciones from "../../assets/icons/IconAdmin/asignar.svg";
 import ConfIntranet from "../../assets/icons/IconAdmin/configurar.svg";
-import GestionSoporte from "../../assets/icons/IconAdmin/soporte.svg";
+import GestionSoporte from "../../assets/icons/IconAdmin/SoporteTecnico.svg";
 
 
 const LINKS = [
@@ -71,7 +71,7 @@ const AdminSidebar = () =>{
                     <Link to={link.path} className="flex items-center gap-4 w-full">
                       <img src={link.icono} className="w-6 h-6" />
                       {isExpanded && (
-                        <span className="text-sm font-medium text-gray-800">
+                        <span className="text-[17px] font-medium text-gray-800">
                           {link.title}
                         </span>
                       )}
