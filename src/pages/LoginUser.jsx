@@ -1,67 +1,50 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
+import { AuthContext } from '../context/authContext';
 import LogoBlanco from '../assets/icons/Login/LogoAlejandria.svg';
 import LogoUsuario from '../assets/icons/Login/user.svg';
 import Candado from '../assets/icons/Login/passlock.svg';
-
-// 🔒 Mock de usuario hardcodeado
-const users = [
-  {
-    id: 2,
-    nombre: "Alejan",
-    correo: "Alejand12311@gmail.com",
-    dni: "7634223442",
-    usuario: {
-      id: 2,
-      username: "Alejand12311@gmail.com",
-      password: "123456", // password visible para pruebas
-      role: "administrador",
-      estado: true
-    }
-  }
-];
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const  {login}  = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Simulación local sin fetch
-    const userFound = users.find(
-      (u) =>
-        u.usuario.username === username &&
-        u.usuario.password === password
-    );
+    try {
+      const res = await axios.post('http://localhost:3001/auth/login', {
+        username,
+        password
+      });
 
-    if (!userFound) {
+      const { access_token, datos_usuario } = res.data;
+
+      // Guardamos en AuthContext
+      login({ ...datos_usuario, access_token });
+
+      // Redirigimos según el rol
+      switch (datos_usuario.role) {
+        case 'admin':
+          navigate('/admin/gestionar-usuarios');
+          break;
+        case 'asesor':
+          navigate('/asesor/home');
+          break;
+        case 'estudiante':
+          navigate('/estudiante/home');
+          break;
+        default:
+          navigate('/');
+      }
+
+    } catch (err) {
+      console.error(err);
       setError('Usuario o contraseña incorrecta');
-      return;
-    }
-
-    // Guardamos el usuario en localStorage
-    localStorage.setItem('user', JSON.stringify({
-      nombre: userFound.nombre,
-      rol: userFound.usuario.role
-    }));
-
-    // Redirigimos según su rol
-    switch (userFound.usuario.role) {
-      case 'administrador':
-        navigate('/admin/gestionar-usuarios');
-        break;
-      case 'asesor':
-        navigate('/asesor/home');
-        break;
-      case 'estudiante':
-        navigate('/estudiante/home');
-        break;
-      default:
-        navigate('/');
     }
   };
 
@@ -73,7 +56,6 @@ const Login = () => {
           onSubmit={handleSubmit}
         >
           <img src={LogoBlanco} alt="Logo Alejandría" />
-
           <div className="flex flex-col justify-center items-center gap-[25px] w-full bg-transparent">
             <div className="relative w-full">
               <span className="absolute left-3 top-3 text-white">
