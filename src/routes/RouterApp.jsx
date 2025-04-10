@@ -14,6 +14,8 @@ import GestionarUsuarios from '../pages/Administrador/GestionUser';
 
 import Unauthorized from '../pages/Unauthorized';
 import ErrorScreen from '../pages/ErrorScreen';
+import ResetPassword from '../pages/ResetPassword';
+import NuevaContraseña from '../pages/NuevaContraseña';
 
 const RouterApp = () => {
   return (
@@ -41,6 +43,10 @@ const RouterApp = () => {
 
       {/* CATCH ALL */}
       <Route path="*" element={<ErrorScreen />} />
+
+      {/* RECUPERAR CONTRASEÑA */}
+      <Route path="/recuperarContraseña" element={<ResetPassword/>} />
+      <Route path='/cambiarContraseña' element={<NuevaContraseña/>} />
     </Routes>
   );
 };

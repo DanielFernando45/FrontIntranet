@@ -92,8 +92,9 @@ const Login = () => {
               INICIAR SESIÓN
             </button>
 
-            <a href="#" className="text-white text-right">
+            <a href="/recuperarContraseña" className="text-white text-right">
               ¿OLVIDÓ SU CONTRASEÑA?
+              
             </a>
           </div>
         </form>

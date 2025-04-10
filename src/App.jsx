@@ -6,27 +6,29 @@ import Login from "./pages/LoginUser";
 import RouterApp from "./routes/RouterApp";
 import { AuthProvider } from './context/authContext';
 
+
 export const App = () => {
   return (
     <AuthProvider>
       
       <BrowserRouter>
-      <Suspense
-        fallback={
-          <div className="bg-[#ffff] min-h-screen flex items-center justify-center">
-            <img
-              src={spinner}
-              className="w-[100px] h-[200px] animate-spin"
-              alt="spinner"
-            />
-          </div>
-        }
-      >
-        <Routes>
-          <Route path="/*" element={<RouterApp />} />
-          <Route path="/" element={<Login />} />
-        </Routes>
-      </Suspense>
+        <Suspense
+          fallback={
+            <div className="bg-[#ffff] min-h-screen flex items-center justify-center">
+              <img
+                src={spinner}
+                className="w-[100px] h-[200px] animate-spin"
+                alt="spinner"
+              />
+            </div>
+          }
+        >
+          <Routes>
+            <Route path="/*" element={<RouterApp />} />
+            <Route path="/" element={<Login />} />
+            
+          </Routes>
+        </Suspense>
     </BrowserRouter>
 
     </AuthProvider>
